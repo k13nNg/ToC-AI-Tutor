@@ -1,0 +1,95 @@
+0 Key mathematical objects, tools, and notation
+0.1 Sets
+0.2 Functions
+0.3 Graphs
+0.4 Transition functions
+1 Finite Automata
+1.1 finite automaton for checking a string for equality
+1.2 finite automaton for finding a word in a file
+1.3 the language of a finite automaton
+1.4 the empty string, ε
+1.5 definition of computation
+1.6 regular languages
+1.7 regular operations
+2 Nondeterminism
+2.1 NFA: computing in parallel
+2.2 formal description of an NFA
+2.3 converting NFAs to DFAs
+2.4 closure under the regular operations
+2.5 If languages A1 and A2 are regular, then A1 ∪A2 is regular
+3 Regular Expressions
+3.1 examples of regular expressions
+3.2 equivalence with finite automata
+3.3 more shorthand
+3.4 formal definition of a regular expression
+3.5 the difference between ε and ∅
+3.6 order of precedence
+3.7 The pumping lemma for regular languages
+3.8 nonregular languages
+4 Context-free grammars
+4.1 shorthand for production rules
+4.2 what’s the context?
+4.3 derivations
+4.4 parse trees
+4.5 language of a grammar
+4.6 designing CFGs
+4.7 converting DFAs into CFGs
+5 Pushdown automata
+5.1 PDA state diagrams
+5.2 PDA example
+5.3 another PDA example
+5.4 equivalence of PDAs and CFGs
+5.5 pumping lemma for context-free languages
+5.6 example
+6 Turing machines
+6.1 the tape of a TM
+6.2 the configuration of a TM
+6.3 the transition function of a TM
+6.4 TM example: is thing1 the same as thing2?
+6.5 multi-tape TMs
+6.6 non-deterministic TMs
+8 Recognizers and Deciders
+8.1 Recognizers
+8.2 example of a recognizer
+8.3 specific example of a recognizer (using python)
+8.4 Deciders
+8.5 example of a decider
+8.6 specific example of a decider (using python)
+8.7 TMs as descriptions of algorithms
+8.8 Encodings
+8.9 decidable languages
+8.10 undecidable languages and the halting problem
+9 Undecidable problems
+9.1 the halting problem
+9.2 TMs with limited memory
+10 Reducibility
+10.1 mapping reducibility
+10.2 a simple A ≤m B example
+10.3 decidability
+10.4 decidability using A ≤m B
+10.5 undecidability using A ≤m B
+10.6 a practical A ≤m B example
+11 Time Complexity
+11.1 big-O notation
+11.2 polynomial example
+11.3 logarithm example
+11.4 Time complexity of algorithms
+11.5 Time complexity classes
+11.6 Time complexity classes P and NP
+11.7 the class P
+11.8 the class NP
+11.9 P=NP?
+11.10 PATH vs. HAMPATH
+11.11 Proof that PATH ∈P
+12 NP-completeness
+12.1 showing that a language is NP-complete
+12.2 example of a specific problem reduction
+12.3 example: show SET-COV ER is NP-complete
+13 Space Complexity
+13.1 Savitch’s theorem
+13.2 PATH examples
+13.2.1 Show that PATH ∈NSPACE(O(n))
+13.2.2 Show that PATH ∈SPACE(O(2n))
+13.2.3 Show that PATH ∈SPACE(O(n2))
+13.2.4 Python code example
+13.3 PSPACE=NPSPACE ?
