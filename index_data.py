@@ -105,9 +105,6 @@ id_map = {i: chunk_ids[i] for i in range(len(chunks))}
 with open("bm25_index.pickle", "wb") as f:
     pickle.dump(bm25_model, f)
 
-with open("all_chunks.pickle", "wb") as f:
-    pickle.dump(chunks, f)
-
 with open("id_map.pickle", "wb") as f: 
     pickle.dump(id_map, f)
 

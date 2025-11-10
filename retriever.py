@@ -1,6 +1,5 @@
 from collections import defaultdict
 import pickle
-import heapq
 import ollama
 import numpy as np
 import chromadb
@@ -9,15 +8,15 @@ client = chromadb.PersistentClient(path="./chroma_data")
 
 collection = client.get_collection(name="lessons")
 
+# weight the dense search ranks more as we are working with highly technical documents, 
+# which might results in contextual/ conceptual questions. For example: "What's a PDA?"
 RRF_K = 60
 BM25_WEIGHT = 1.0    
 DENSE_WEIGHT = 2.0   
 
+# load the saved BM25 model and the uuid map
 with open("bm25_index.pickle", "rb") as f:
     bm25 = pickle.load(f)
-
-with open("all_chunks.pickle", "rb") as f:
-    all_chunks = pickle.load(f)
 
 with open("id_map.pickle", "rb") as f: 
     id_map = pickle.load(f)
@@ -31,8 +30,6 @@ def hybrid_search(query_text, top_k = 5):
 
     bm25_scores = np.array(bm25.get_scores(tokenized_query))
     bm25_int_ranks = np.argsort(bm25_scores)[::-1][:top_k * 2].tolist()
-
-    # CRITICAL FIX: Convert integer indices to string UUIDs for fusion
     bm25_uuid_ranks = [id_map[i] for i in bm25_int_ranks]
 
     # Dense search
@@ -65,16 +62,18 @@ def hybrid_search(query_text, top_k = 5):
         reverse=True
     )[:top_k] 
     
-    return [doc_id for doc_id, _ in sorted_fused_items]
+    retrieved_docs = [collection.get(ids=[doc_id]) for doc_id, _ in sorted_fused_items]
 
-results = hybrid_search("What is a set?")
+    output = []
 
-for r in range(len(results)):
-    print("Result", r)
-    print("--------")
-    if isinstance(results[r], int):
-        print(all_chunks[results[r]])
-    else:
-        print(collection.get(ids=[results[r]])["documents"][0])
-    print("--------")
+    for doc in retrieved_docs:
+        output += doc["documents"]
+
+    return '\n\n'.join(output)
+
+# for r in range(len(results)):
+#     print("Result", r)
+#     print("--------")
+#     print(collection.get(ids=[results[r]])["documents"][0])
+#     print("--------")
     
