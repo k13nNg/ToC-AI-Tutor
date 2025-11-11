@@ -4,9 +4,10 @@ import ollama
 import numpy as np
 import chromadb
 
-client = chromadb.PersistentClient(path="./chroma_data/notes")
+client = chromadb.PersistentClient(path="./chroma_data")
 
-collection = client.get_collection(name="lessons")
+notes_collection = client.get_collection(name="lessons")
+exercises_collection = client.get_collection(name="exercises")
 
 # weight the dense search ranks more as we are working with highly technical documents, 
 # which might results in contextual/ conceptual questions. For example: "What's a PDA?"
@@ -24,7 +25,21 @@ with open("notes_id_map.pickle", "rb") as f:
 def calculate_rrf(rank):
     return 1.0 / (RRF_K + rank)
 
-def hybrid_search_notes(query_text, top_k = 5):
+
+def exercises_search(query_embedding, top_k = 5):
+    retrieved_docs = exercises_collection.query(
+        query_embeddings=query_embedding["embeddings"],
+        n_results=top_k
+    )
+
+    results = []
+
+    for doc in retrieved_docs["documents"]:
+        results += doc
+
+    return '\n\n'.join(results)
+
+def notes_search(query_text, query_embedding, top_k = 5):
     # Sparse search
     tokenized_query= query_text.split(" ")
 
@@ -33,9 +48,7 @@ def hybrid_search_notes(query_text, top_k = 5):
     bm25_uuid_ranks = [id_map[i] for i in bm25_int_ranks]
 
     # Dense search
-    query_embedding = ollama.embed("embeddinggemma", query_text)
-
-    results = collection.query(
+    results = notes_collection.query(
         query_embeddings=query_embedding["embeddings"],
         n_results=top_k * 2
     )
@@ -62,7 +75,7 @@ def hybrid_search_notes(query_text, top_k = 5):
         reverse=True
     )[:top_k] 
     
-    retrieved_docs = [collection.get(ids=[doc_id]) for doc_id, _ in sorted_fused_items]
+    retrieved_docs = [notes_collection.get(ids=[doc_id]) for doc_id, _ in sorted_fused_items]
 
     output = []
 
@@ -70,5 +83,3 @@ def hybrid_search_notes(query_text, top_k = 5):
         output += doc["documents"]
 
     return '\n\n'.join(output)
-
-    

@@ -1,39 +1,44 @@
 from google import genai
 from dotenv import load_dotenv
-from retriever import hybrid_search_notes
+from retriever import notes_search, exercises_search
+import ollama
 import os
-import time
 
 load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-query = input("Ask me a question! ")
-
-context = hybrid_search_notes(query)
-
-prompt = ""
+system_instruction = ""
 
 with open("prompt.txt", "r") as f:
-    for line in f.readlines():
-        prompt += line
+    system_instruction = f.read()
 
-prompt += f"""
-### Retrieved context:
-{context}
-"""
-
-print("\nGenerating response, just a second!", end="", flush=True)
-for _ in range(3): 
-    time.sleep(0.4)
-    print(".", end="", flush=True)
-print("\n") 
-
-response = client.models.generate_content(
+chat = client.chats.create(
     model="gemini-2.5-flash",
-    contents=query,
+    config={"system_instruction": system_instruction}
 )
+ 
+while True:
+    query = input("Student: ")
 
-print()
+    query_embeddings = ollama.embed("embeddinggemma", query)
 
-print (response.text)
+    retrieved_context = f"\n\nNotes:\n\n{
+        notes_search(query, query_embeddings)
+    }\n\nExercises:\n\n{
+        exercises_search(query_embeddings)
+    }"
+
+    full_prompt = f"""
+    ### Retrieved context:
+    {retrieved_context}
+
+    ### User Query:
+    {query}
+    """
+
+    response = chat.send_message(full_prompt)
+
+    print()
+    print("AI Tutor:", response.text)
+    print("-" * 20)

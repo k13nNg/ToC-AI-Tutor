@@ -1,30 +1,17 @@
-import chromadb
-import ollama
+import streamlit as st
 
-client = chromadb.PersistentClient(path="./chroma_data")
+st.title("Hello Streamlit-er 👋")
+st.markdown(
+    """ 
+    This is a playground for you to try Streamlit and have fun. 
 
-collection = client.get_collection(name="exercises")
-
-query_texts=[
-    "Exercises on Turing Machine"
-]
-
-query_embeddings = ollama.embed("embeddinggemma", query_texts)
-
-results= collection.query(
-    query_embeddings=query_embeddings["embeddings"],
-    n_results=5,
-    include=['distances', 'documents']
+    **There's :rainbow[so much] you can build!**
+    
+    We prepared a few examples for you to get started. Just 
+    click on the buttons above and discover what you can do 
+    with Streamlit. 
+    """
 )
 
-# Assuming query_texts is your original list: ["What is a set?", "What is a PDA?", ...]
-for i, (query_docs, query_dists) in enumerate(zip(results["documents"], results["distances"])):
-    query_text = query_texts[i]
-    print(f"\n--- Query {i + 1}: {query_text} ---")
-
-    # This loop iterates through the individual retrieved items and their distances
-    for rank, (doc_text, distance) in enumerate(zip(query_docs, query_dists)):
-        # Lower distance means higher similarity/relevance
-        print(f"Rank {rank + 1} (Distance: {distance:.4f}):")
-        print(f"  {doc_text[:100]}...") # Print first 100 characters of the document
-        print("-----")
+if st.button("Send balloons!"):
+    st.balloons()
