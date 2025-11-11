@@ -105,7 +105,7 @@ id_map = {i: chunk_ids[i] for i in range(len(chunks))}
 with open("bm25_index.pickle", "wb") as f:
     pickle.dump(bm25_model, f)
 
-with open("id_map.pickle", "wb") as f: 
+with open("notes_id_map.pickle", "wb") as f: 
     pickle.dump(id_map, f)
 
-print("Indexing process complete. ID mapping saved for RRF.")
+print("Notes indexing process complete. ID mapping saved for RRF.")

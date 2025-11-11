@@ -3,10 +3,10 @@ import ollama
 
 client = chromadb.PersistentClient(path="./chroma_data")
 
-collection = client.get_collection(name="lessons")
+collection = client.get_collection(name="exercises")
 
 query_texts=[
-    "pumping lemma for regular languages"
+    "Exercises on Turing Machine"
 ]
 
 query_embeddings = ollama.embed("embeddinggemma", query_texts)

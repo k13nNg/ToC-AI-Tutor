@@ -1,6 +1,6 @@
 from google import genai
 from dotenv import load_dotenv
-from retriever import hybrid_search
+from retriever import hybrid_search_notes
 import os
 import time
 
@@ -10,7 +10,7 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 query = input("Ask me a question! ")
 
-context = hybrid_search(query)
+context = hybrid_search_notes(query)
 
 prompt = ""
 
@@ -27,7 +27,7 @@ print("\nGenerating response, just a second!", end="", flush=True)
 for _ in range(3): 
     time.sleep(0.4)
     print(".", end="", flush=True)
-print("\n")
+print("\n") 
 
 response = client.models.generate_content(
     model="gemini-2.5-flash",
@@ -36,4 +36,4 @@ response = client.models.generate_content(
 
 print()
 
-print (response)
+print (response.text)

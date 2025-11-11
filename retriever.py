@@ -4,7 +4,7 @@ import ollama
 import numpy as np
 import chromadb
 
-client = chromadb.PersistentClient(path="./chroma_data")
+client = chromadb.PersistentClient(path="./chroma_data/notes")
 
 collection = client.get_collection(name="lessons")
 
@@ -18,13 +18,13 @@ DENSE_WEIGHT = 2.0
 with open("bm25_index.pickle", "rb") as f:
     bm25 = pickle.load(f)
 
-with open("id_map.pickle", "rb") as f: 
+with open("notes_id_map.pickle", "rb") as f: 
     id_map = pickle.load(f)
 
 def calculate_rrf(rank):
     return 1.0 / (RRF_K + rank)
 
-def hybrid_search(query_text, top_k = 5):
+def hybrid_search_notes(query_text, top_k = 5):
     # Sparse search
     tokenized_query= query_text.split(" ")
 
@@ -71,9 +71,4 @@ def hybrid_search(query_text, top_k = 5):
 
     return '\n\n'.join(output)
 
-# for r in range(len(results)):
-#     print("Result", r)
-#     print("--------")
-#     print(collection.get(ids=[results[r]])["documents"][0])
-#     print("--------")
     
