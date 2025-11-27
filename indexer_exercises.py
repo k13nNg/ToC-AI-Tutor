@@ -37,12 +37,6 @@ for week in range(0,14):
                 else:
                     if current_chunk:
                         current_chunk["content"] += line + " "
-                    # else:
-                    #     # Handle text before first heading
-                    #     current_chunk = {
-                    #         "title": f"Week {str(week)}",
-                    #         "content": line + " "
-                    #     }
 
             # Append the last section
             if current_chunk:
