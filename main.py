@@ -1,6 +1,6 @@
-from classes.hybrid_retriever import HybridRetriever
+from ingest.indexer import *
 
-retriever = HybridRetriever()
+documents = load_documents()
 
-for i in retriever.retrieve("What is a Turing Machine?"):
-    print(i)
+build_dense_indices(documents)
+build_sparse_corpus(documents)

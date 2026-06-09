@@ -1,21 +1,22 @@
-from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from pathlib import Path
 from rank_bm25 import BM25Okapi
 from collections import defaultdict
-from classes.vector_store import VectorStore
+from stores.vector_store import VectorStore
 
 import pickle
 import numpy as np
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME = "nomic-embed-text"
 FAISS_INDEX_FILE_PATH = PROJECT_ROOT / "data" / "dense" / "faiss" / "faiss_index.index"
 BM25_CORPUS_FILE_PATH = PROJECT_ROOT / "data" / "sparse" / "bm25_corpus.pkl"
 
 class HybridRetriever:
     def __init__(self):
-        self.embedding_model = HuggingFaceEmbeddings(model_name = EMBEDDING_MODEL_NAME)
+        self.embedding_model = OllamaEmbeddings(model=EMBEDDING_MODEL_NAME)
         self.vector_db = VectorStore(index_path=str(FAISS_INDEX_FILE_PATH))
 
         with open(BM25_CORPUS_FILE_PATH, "rb") as f:
@@ -49,15 +50,20 @@ class HybridRetriever:
 
         return ranked_ids
 
-    def rrf(self, rank_lists, k=60):
+    def rrf(self, rank_lists, weights = None, k=60):
         """
-        Return fusioned scores of documents in rank_lists
+        Return weighted fusioned scores of documents in rank_lists
         """
+
+        # initialize equal weights for each component if no weights is given
+        if weights is None:
+            weights = [1] * len(rank_lists)
+
         scores = defaultdict(float)
 
-        for ranked_list in rank_lists:
+        for ranked_list, weight in zip(rank_lists, weights):
             for rank, doc_id in enumerate(ranked_list, start=1):
-                scores[int(doc_id)] += 1 / (k + rank)
+                scores[int(doc_id)] += weight * (1 / (k + rank))
 
         return sorted(
             scores.items(),
@@ -65,14 +71,18 @@ class HybridRetriever:
             reverse=True
         )
     
-    def retrieve(self, query, k=5):
+    def retrieve(self, query, k=5, DENSE_TO_SPARSE_RATIO = 0.5):
         """
         Return k most relevant documents, ranked by RRF
         """
         dense_ranked = self.dense_retrieve(query, k)
         sparse_ranked = self.sparse_retrieve(query, k)
 
-        results = self.rrf([dense_ranked, sparse_ranked])
+        dense_weights = DENSE_TO_SPARSE_RATIO
+        sparse_weights = 1.0 - DENSE_TO_SPARSE_RATIO
+
+        results = self.rrf([dense_ranked, sparse_ranked],
+                           weights = [dense_weights, sparse_weights])
 
         return results
             

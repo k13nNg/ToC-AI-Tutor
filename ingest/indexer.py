@@ -1,8 +1,8 @@
 from langchain_text_splitters import MarkdownHeaderTextSplitter
 from pathlib import Path
-from langchain_huggingface import HuggingFaceEmbeddings
-from classes.metadata_store import MetadataStore
-from classes.vector_store import VectorStore
+from langchain_ollama import OllamaEmbeddings
+from stores.metadata_store import MetadataStore
+from stores.vector_store import VectorStore
 
 import numpy as np
 import pickle
@@ -16,9 +16,9 @@ BM25_INDEX_FILE_PATH = PROJECT_ROOT / "data" / "sparse"
 HEADERS_TO_SPLIT = [("#", "Section"),
                       ("##", "Subsection")]
 
-EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME = "nomic-embed-text"
 
-META_DATA_CONNECTION_PATH = PROJECT_ROOT / "data" / "dense" / "sql" / "docs_metadata.db"
+METADATA_CONNECTION_PATH = PROJECT_ROOT / "data" / "dense" / "sql" / "docs_metadata.db"
 
 def preprocess(text):
     """
@@ -62,10 +62,10 @@ def build_dense_indices(documents):
     """
     try:
         # initiate connection to SQLite
-        metadata_store = MetadataStore(str(META_DATA_CONNECTION_PATH))
+        metadata_store = MetadataStore(str(METADATA_CONNECTION_PATH))
 
         # embed documents using EMBEDDING_MODEL_NAME
-        embedding_model = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+        embedding_model = OllamaEmbeddings(model=EMBEDDING_MODEL_NAME)
         docs_content = [doc.page_content for doc in documents]
 
         embedded_docs = embedding_model.embed_documents(docs_content)
