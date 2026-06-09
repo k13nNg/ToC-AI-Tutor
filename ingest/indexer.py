@@ -4,7 +4,6 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from classes.metadata_store import MetadataStore
 from classes.vector_store import VectorStore
 
-from rank_bm25 import BM25Okapi
 import numpy as np
 import pickle
 
