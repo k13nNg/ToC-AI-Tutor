@@ -2,15 +2,11 @@
 
 A **Retrieval-Augmented Generation (RAG)** chatbot that serves as an AI teaching assistant for a **Theory of Computation** course. Students can ask questions in natural language and receive accurate, context-grounded answers drawn directly from the course lecture slides — not hallucinated out of thin air.
 
----
-
 ## Introduction
 
 Theory of Computation is a notoriously abstract course. Concepts like Turing machines, pushdown automata, and context-free grammars are hard to look up quickly, and office hours can't always be available at 2 AM before an exam. This project builds a conversational tutor that has read the actual course material and can answer questions grounded in it.
 
 The system ingests weekly lecture PDFs (Weeks 0–12, excluding Week 7 which is a reading week), converts them to structured Markdown, indexes them with both dense and sparse retrieval methods, and serves answers through a chat interface powered by a large language model. The tutor follows the course material as its primary source of truth — if the retrieved content and the model's prior knowledge conflict, the retrieved material wins.
-
----
 
 ## Pipeline Overview
 
