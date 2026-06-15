@@ -8,6 +8,43 @@ from stores.vector_store import VectorStore
 import pickle
 import numpy as np
 
+
+QUERY_EXPANSIONS = {
+    "dfa": [
+        "deterministic finite automaton"
+    ],
+
+    "nfa": [
+        "nondeterministic finite automaton",
+        "non deterministic finite automaton"
+    ],
+
+    "tm": [
+        "turing machine"
+    ],
+
+    "pda": [
+        "pushdown automaton"
+    ],
+
+    "cfg": [
+        "context free grammar"
+    ]
+}
+
+def expand_query(query):
+    expanded = query
+
+    words = query.lower().split()
+
+    for word in words:
+        if word in QUERY_EXPANSIONS:
+            expansions = QUERY_EXPANSIONS[word]
+            expanded += " " + " ".join(expansions)
+
+    return expanded
+
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 EMBEDDING_MODEL_NAME = "nomic-embed-text"
@@ -28,7 +65,7 @@ class HybridRetriever:
         """
         Retrieve k nearest documents using FAISS index
         """
-        query_embedding = self.embedding_model.embed_query(query)
+        query_embedding = self.embedding_model.embed_query(expand_query(query))
 
         _, ids = self.vector_db.search(query_embedding, k)
 
@@ -45,7 +82,7 @@ class HybridRetriever:
             """
             return text.lower().split()
 
-        scores = self.bm25.get_scores(preprocess(query))
+        scores = self.bm25.get_scores(preprocess(expand_query(query)))
         ranked_ids = np.argsort(scores)[::-1][:k]
 
         return ranked_ids

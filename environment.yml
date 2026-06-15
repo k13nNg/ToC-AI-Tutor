@@ -1,0 +1,7 @@
+name: ToC_chatbot_env
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - faiss-cpu
+prefix: /Users/nguyen/miniconda3/envs/ToC_chatbot_env

@@ -1,6 +1,3 @@
-from ingest.indexer import *
+from retrieve.llm import ask_llm  # change this import
 
-documents = load_documents()
-
-build_dense_indices(documents)
-build_sparse_corpus(documents)
+print(ask_llm("WHAT THE FUCK IS A TURING MACHINE?", []))
