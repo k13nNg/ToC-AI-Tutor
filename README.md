@@ -93,7 +93,7 @@ Before either search, a lightweight **query expansion** step expands common abbr
 RRF combines the two ranked lists without needing calibrated scores from either. For each document the formula is:
 
 $$
-\text{RRF\_score}(d) = \sum_{i} w_i \cdot \frac{1}{k + \text{rank}_i(d)}
+\text{RRF score}(d) = \sum_{i} w_i \cdot \frac{1}{k + \text{rank}_i(d)}
 $$
 
 where $k = 60$ is a smoothing constant that dampens the advantage of the very top rank, $\text{rank}_i(d)$ is the document's position in ranked list $i$, and $w_i$ is configurable via the `DENSE_TO_SPARSE_RATIO` parameter (default $w_{\text{dense}} = w_{\text{sparse}} = 0.5$). The documents are then re-sorted by their fused scores and the top-k are passed downstream.
