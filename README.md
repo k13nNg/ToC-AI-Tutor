@@ -92,11 +92,11 @@ Before either search, a lightweight **query expansion** step expands common abbr
 
 RRF combines the two ranked lists without needing calibrated scores from either. For each document the formula is:
 
-```
-RRF_score(d) = Σ  weight_i * (1 / (k + rank_i(d)))
-```
+$$
+\text{RRF\_score}(d) = \sum_{i} w_i \cdot \frac{1}{k + \text{rank}_i(d)}
+$$
 
-where `k = 60` (a smoothing constant that dampens the advantage of the very top rank), `rank_i(d)` is the document's position in ranked list `i`, and `weight_i` is configurable via the `DENSE_TO_SPARSE_RATIO` parameter (default 0.5 / 0.5). The documents are then re-sorted by their fused scores and the top-k are passed downstream.
+where $k = 60$ is a smoothing constant that dampens the advantage of the very top rank, $\text{rank}_i(d)$ is the document's position in ranked list $i$, and $w_i$ is configurable via the `DENSE_TO_SPARSE_RATIO` parameter (default $w_{\text{dense}} = w_{\text{sparse}} = 0.5$). The documents are then re-sorted by their fused scores and the top-k are passed downstream.
 
 RRF is used here because:
 - Dense retrieval is good at semantic similarity ("what is a machine that accepts all strings?").
