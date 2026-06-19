@@ -1,6 +1,5 @@
 import streamlit as st
-from retrieve.llm import ask_llm  # change this import
-# from retrieve.llm_groq import ask_llm
+from retrieve.llm import ask_llm
 
 st.set_page_config(page_title="ToC Tutor", page_icon="🧠")
 

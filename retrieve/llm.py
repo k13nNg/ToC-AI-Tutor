@@ -3,7 +3,7 @@ import ollama
 import time
 import re
 
-LLM_NAME = "gemma3:1b"
+LLM_NAME = "llama3.2"
 
 # Patterns that indicate the model leaked internal content
 _LEAK_PATTERNS = [
@@ -31,7 +31,6 @@ def ask_llm(query, chat_history):
     t0 = time.time()
 
     context = build_context(query, k=2)
-    print("Context build:", time.time() - t0)
 
     with open("retrieve/prompt.txt", "r", encoding="utf-8") as f:
         system_prompt = f.read()
