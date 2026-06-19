@@ -1,8 +1,17 @@
 import streamlit as st
-from retrieve.llm import ask_llm
 
-st.set_page_config(page_title="ToC Tutor", page_icon="🧠")
-st.title("🧠 Theory of Computation Tutor")
+st.set_page_config(page_title="ToC Tutor (Fine-tuned)", page_icon="🧠")
+st.title("🧠 Theory of Computation Tutor (Fine-tuned Gemma 3 1B)")
+
+# ---------------------------------------------------------------------------
+# Load model once — this takes ~10s and significant RAM
+# ---------------------------------------------------------------------------
+@st.cache_resource
+def load_model():
+    from retrieve.llm_finetuned import ask_finetuned
+    return ask_finetuned
+
+ask_finetuned = load_model()
 
 # ---------------------------------------------------------------------------
 # Session state (chat memory)
@@ -30,7 +39,7 @@ if user_input:
 
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            answer = ask_llm(user_input, st.session_state.messages)
+            answer = ask_finetuned(user_input, st.session_state.messages)
             st.write(answer)
 
     st.session_state.messages.append({"role": "assistant", "content": answer})

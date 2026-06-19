@@ -36,7 +36,7 @@ def load_documents():
     markdown_splitter = MarkdownHeaderTextSplitter(HEADERS_TO_SPLIT)
 
     # iterate through the weeks
-    for i in range(0, 12):
+    for i in range(0, 13):
         # skip Week 7, since it's Reading Week and no content exist
         if (i != 7):
             # open the markdown file

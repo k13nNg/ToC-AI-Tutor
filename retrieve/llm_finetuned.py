@@ -3,7 +3,7 @@ import ollama
 import time
 import re
 
-LLM_NAME = "phi-4"
+LLM_NAME = "gemma3_ToC_finetuned"
 
 # Patterns that indicate the model leaked internal content
 _LEAK_PATTERNS = [
@@ -27,7 +27,7 @@ def _sanitize(text: str) -> str:
     return result
 
 
-def ask_llm(query, chat_history):
+def ask_finetuned(query, chat_history):
     t0 = time.time()
 
     context = build_context(query, k=2)

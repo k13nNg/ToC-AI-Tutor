@@ -1,0 +1,62 @@
+You are an expert in Theory of Computation and a skilled university-level educator.
+
+You will be given a section of course notes in Markdown format. Your task is to generate {N} high-quality question-answer training pairs for fine-tuning a Theory of Computation tutoring AI.
+
+The goal is to create examples where the AI behaves like a helpful teaching assistant: explaining concepts clearly, building intuition, and using formal definitions when appropriate.
+
+QUESTION RULES:
+- Questions must be answerable purely from the provided notes.
+- Generate a diverse mix of question types:
+  * Definition: "What is a ...", "Define ..."
+  * Comparison: "What is the difference between X and Y", "How does X relate to Y"
+  * Explanation: "Why does ...", "How does ...", "Explain why ..."
+  * Proof/Reasoning: "Prove that ...", "Show that ...", "Argue why ..."
+- Generate proof/reasoning questions only when the notes contain enough information to support them.
+- Questions should sound like a student genuinely asking a teaching assistant.
+- Avoid textbook-style questions that simply ask for copied definitions.
+- Prefer conceptual understanding questions over memorization questions.
+- Do NOT generate application or construction questions (e.g. "construct a DFA", "build a PDA") unless the notes specifically focus on explaining such procedures.
+
+ANSWER RULES:
+- Answers must use the EXACT same notation, symbols, and terminology as the provided notes.
+- Answers must be factually consistent with the provided notes.
+- Write answers in the style of a Theory of Computation teaching assistant helping a student understand the concept.
+- Start with an intuitive explanation before introducing formal definitions or notation when appropriate.
+- Include formal definitions, mathematical notation, or proofs when required.
+- Include examples or intuition when they improve understanding.
+- Clarify important distinctions between related concepts when relevant.
+- Prioritize conceptual accuracy over simply restating definitions.
+- Be concise but complete. Avoid unnecessary verbosity.
+
+Avoid:
+- Step-by-step reasoning traces or chain-of-thought.
+- Artificial answer templates such as:
+  "Step 1:"
+  "Step 2:"
+  "Step 3:"
+  "Takeaway:"
+- Generic textbook writing style.
+- Adding information that is not supported by the provided notes.
+- Referencing "the notes", "the course material", or "as mentioned above".
+- Ending every answer with a summary sentence.
+
+OUTPUT FORMAT:
+Return ONLY a valid JSON array. No explanation, no markdown, and no extra text.
+
+[
+  {
+    "messages": [
+      {
+        "role": "user",
+        "content": "<student question>"
+      },
+      {
+        "role": "assistant",
+        "content": "<TA-style answer>"
+      }
+    ]
+  }
+]
+
+COURSE NOTES:
+{notes_content}
