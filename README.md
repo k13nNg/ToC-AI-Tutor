@@ -196,8 +196,7 @@ conda activate ToC_chatbot_env
 ### 3. Install Python dependencies
 
 ```bash
-pip install streamlit langchain langchain-ollama langchain-text-splitters \
-            rank-bm25 faiss-cpu pymupdf4llm
+pip install -r requirements.txt
 ```
 
 ### 4. Pull required Ollama models
@@ -235,11 +234,11 @@ This clears any existing FAISS index, SQLite DB, and BM25 corpus, then rebuilds 
 
 ### 4. Run the app
 
-The bottleneck in both cases is **CPU memory bandwidth, not RAM**. LLM token generation (the decode phase) is an inherently memory-bound workload. On every single forward pass the model must stream all of its weights from memory into the compute units — for a 70B parameter model at FP16 that is ~140 GB of data moved *per token*. The rate at which this can happen is capped entirely by the memory bus, not by how much RAM is installed or how many CPU cores are available.
+```bash
+streamlit run app.py
+```
 
-This is well established in the literature. DigitalOcean's engineering team notes that ["LLM inference is fundamentally stateful, bottlenecked by memory bandwidth rather than raw compute"](https://www.digitalocean.com/blog/llm-inference-tradeoffs). A detailed roofline analysis (Spheron, 2026) shows that at batch size 1, autoregressive decode has an arithmetic intensity of roughly **1–2 FLOPs per byte** — compared to an H100's roofline ridge of ~591 FLOPs/byte, placing decode operations roughly 300–600× below the compute-bound threshold, meaning [adding FLOPS does nothing to improve token throughput](https://www.spheron.network/blog/ai-memory-wall-inference-latency-guide-2026/). This is independently confirmed in peer-reviewed work: Guo et al. (2025) find that even in large-batch settings, inference ["remains memory-bound, with most GPU compute capabilities underutilized due to DRAM bandwidth saturation as the primary bottleneck"](https://arxiv.org/html/2503.08311v2).
-
-A CPU compounds this problem severely. A high-end desktop CPU offers roughly **50–100 GB/s** of memory bandwidth, compared to **3.35 TB/s** on an H100 SXM5 — a ~35–67× gap. The CPU is not slow because it lacks RAM; it is slow because it cannot move the data fast enough, regardless of how much RAM you give it.
+The app is available at `http://localhost:8501`.
 
 ### Re-indexing
 
