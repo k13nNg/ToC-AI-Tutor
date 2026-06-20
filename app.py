@@ -1,6 +1,5 @@
 import streamlit as st
-from retrieve.llm import ask_llm  # change this import
-# from retrieve.llm_groq import ask_llm
+from retrieve.llm import ask_llm
 
 st.set_page_config(page_title="ToC Tutor", page_icon="🧠")
 
@@ -36,9 +35,7 @@ if user_input:
 
     # 2. generate response using your RAG pipeline
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            answer = ask_llm(user_input, st.session_state.messages)
-            st.write(answer)
+        answer = st.write_stream(ask_llm(user_input, st.session_state.messages))
 
     # 3. store assistant response
     st.session_state.messages.append({

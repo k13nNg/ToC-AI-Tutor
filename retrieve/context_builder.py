@@ -30,6 +30,9 @@ def build_context(query, k = 5, DENSE_TO_SPARSE_RATIO = 0.5):
 
     for doc_id, doc_score in retrieved_docs:
         chunk = metadata_store.fetch(doc_id)
+        if chunk is None:
+            print(f"Warning: doc_id {doc_id} not found in metadata store, skipping.")
+            continue
         output.append(format_chunk(chunk, doc_score))
 
     metadata_store.close_connection()
