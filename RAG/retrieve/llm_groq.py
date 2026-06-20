@@ -12,6 +12,9 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 LLM_NAME = "llama-3.3-70b-versatile"
 
 def ask_llm(query, chat_history):
+    print("--- Using groq model ---")
+    print("-" * 16)
+
     t0 = time.time()
 
     context = build_context(query, k=2)

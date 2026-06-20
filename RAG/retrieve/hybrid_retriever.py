@@ -45,7 +45,7 @@ def expand_query(query):
     return expanded
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 EMBEDDING_MODEL_NAME = "nomic-embed-text"
 FAISS_INDEX_FILE_PATH = PROJECT_ROOT / "data" / "dense" / "faiss" / "faiss_index.index"

@@ -6,12 +6,13 @@ from stores.vector_store import VectorStore
 
 import numpy as np
 import pickle
+import shutil
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
-MARKDOWN_FILE_PATH = PROJECT_ROOT / "data" / "markdown"
+MARKDOWN_FILE_PATH = PROJECT_ROOT / "data" / "markdown_latex"
 FAISS_INDEX_FILE_PATH = PROJECT_ROOT / "data" / "dense" / "faiss"
-BM25_INDEX_FILE_PATH = PROJECT_ROOT / "data" / "sparse" 
+BM25_INDEX_FILE_PATH = PROJECT_ROOT / "data" / "sparse"
 
 HEADERS_TO_SPLIT = [("#", "Section"),
                       ("##", "Subsection")]
@@ -19,6 +20,26 @@ HEADERS_TO_SPLIT = [("#", "Section"),
 EMBEDDING_MODEL_NAME = "nomic-embed-text"
 
 METADATA_CONNECTION_PATH = PROJECT_ROOT / "data" / "dense" / "sql" / "docs_metadata.db"
+
+
+def clear_artifacts():
+    """Delete all previously built index artifacts."""
+    # FAISS index
+    faiss_file = FAISS_INDEX_FILE_PATH / "faiss_index.index"
+    if faiss_file.exists():
+        faiss_file.unlink()
+        print(f"Deleted: {faiss_file.relative_to(PROJECT_ROOT)}")
+
+    # SQLite metadata DB
+    if METADATA_CONNECTION_PATH.exists():
+        METADATA_CONNECTION_PATH.unlink()
+        print(f"Deleted: {METADATA_CONNECTION_PATH.relative_to(PROJECT_ROOT)}")
+
+    # BM25 corpus
+    bm25_file = BM25_INDEX_FILE_PATH / "bm25_corpus.pkl"
+    if bm25_file.exists():
+        bm25_file.unlink()
+        print(f"Deleted: {bm25_file.relative_to(PROJECT_ROOT)}")
 
 def preprocess(text):
     """
