@@ -1,12 +1,20 @@
-import ollama
+from groq import Groq
+from dotenv import load_dotenv
+import os
 
-ROUTER_MODEL = "llama3.2"
+load_dotenv()
 
-SYSTEM_PROMPT = """Classify the user's query into exactly one of three categories:
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-- "on_topic": any question asking to understand, explain, or get an example of a theoretical computer science concept — including automata, regular expressions, Kleene star, formal languages, grammars, Turing machines, decidability, computability, and complexity. Be lenient with typos. Also classify as on_topic if the query is a follow-up, clarification, or example request referring to the previous conversation.
-- "greeting": greetings, identity questions ("who are you"), thank you messages, or small talk.
-- "off_topic": anything else, including study tips, how to succeed in the course, advice, opinions, or questions unrelated to theoretical computer science concepts.
+ROUTER_MODEL = "llama-3.1-8b-instant"
+
+SYSTEM_PROMPT = """You are a query classifier for a Theory of Computation course chatbot.
+
+Classify the query as one of: on_topic, greeting, off_topic.
+
+- "greeting": ONLY greetings ("hi", "hello"), identity questions ("who are you"), or thank you messages.
+- "off_topic": ONLY questions clearly unrelated to computer science, math, or academics (e.g. "what's the weather", "tell me a joke", "how to cook pasta").
+- "on_topic": EVERYTHING ELSE. Any question about CS, math, logic, automata, languages, computation, or anything that could plausibly relate to a Theory of Computation course is on_topic. When in doubt, classify as on_topic.
 
 Reply with exactly one word: on_topic, greeting, or off_topic."""
 
@@ -25,18 +33,19 @@ OFF_TOPIC_RESPONSE = (
 
 def route(query: str, chat_history: list = []) -> str:
     """Returns one of: 'on_topic', 'greeting', 'off_topic'"""
-    # Include last exchange so the router understands follow-up questions
     context_messages = chat_history[-4:] if chat_history else []
 
-    response = ollama.chat(
+    response = client.chat.completions.create(
         model=ROUTER_MODEL,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             *context_messages,
             {"role": "user", "content": query}
-        ]
+        ],
+        temperature=0,
+        max_completion_tokens=5
     )
-    decision = response["message"]["content"].strip().lower()
+    decision = response.choices[0].message.content.strip().lower()
 
     if decision.startswith("on_topic"):
         return "on_topic"

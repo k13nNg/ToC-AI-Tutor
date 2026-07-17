@@ -1,6 +1,8 @@
 from retrieve.context_builder import *
+from retrieve.query_router import route, GREETING_RESPONSE, OFF_TOPIC_RESPONSE
 from groq import Groq
 from dotenv import load_dotenv
+from pathlib import Path
 import time
 import os
 
@@ -8,43 +10,54 @@ load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-# LLM_NAME = "llama-3.1-8b-instant"  # or "llama-3.3-70b-versatile"
 LLM_NAME = "llama-3.3-70b-versatile"
+CONTEXT_RETRIEVED_NUM = 3
+PROMPT_PATH = Path(__file__).resolve().parent / "prompt.txt"
+
 
 def ask_llm(query, chat_history):
-    print("--- Using groq model ---")
-    print("-" * 16)
-
     t0 = time.time()
 
-    context = build_context(query, k=2)
-    print("Context build:", time.time() - t0)
+    decision = route(query, chat_history)
 
-    with open("retrieve/prompt.txt", "r", encoding="utf-8") as f:
+    if decision == "greeting":
+        yield GREETING_RESPONSE
+        return
+
+    if decision == "off_topic":
+        yield OFF_TOPIC_RESPONSE
+        return
+
+    context = build_context(query, k=CONTEXT_RETRIEVED_NUM)
+    t1 = time.time()
+    print(f"Context Build: {t1 - t0:.3f}s")
+
+    with open(PROMPT_PATH, "r", encoding="utf-8") as f:
         system_prompt = f.read()
 
     messages = [
         {"role": "system", "content": system_prompt},
-        *chat_history[:-1],  # cap history
+        *chat_history[-4:],
         {
             "role": "user",
-            "content": f"""Question: {query}
-
-Context:
-{context}"""
+            "content": f"Question: {query}\n\nContext:\n{context}"
         }
     ]
 
-    t1 = time.time()
+    try:
+        stream = client.chat.completions.create(
+            model=LLM_NAME,
+            messages=messages,
+            temperature=0.2,
+            stream=True
+        )
 
-    response = client.chat.completions.create(
-        model=LLM_NAME,
-        messages=messages,
-        temperature=0.2
-    )
-
-    print("Generation:", time.time() - t1)
-    print("Total:", time.time() - t0)
-    print("-" * 16)
-
-    return response.choices[0].message.content
+        for chunk in stream:
+            token = chunk.choices[0].delta.content
+            if token:
+                yield token
+    finally:
+        t2 = time.time()
+        print(f"Generation: {t2 - t1:.3f}s")
+        print(f"Total: {t2 - t0:.3f}s")
+        print("-" * 16)

@@ -1,5 +1,4 @@
-# from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama import OllamaEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from pathlib import Path
 from rank_bm25 import BM25Okapi
 from collections import defaultdict
@@ -53,7 +52,9 @@ BM25_CORPUS_FILE_PATH = PROJECT_ROOT / "data" / "sparse" / "bm25_corpus.pkl"
 
 class HybridRetriever:
     def __init__(self):
-        self.embedding_model = OllamaEmbeddings(model=EMBEDDING_MODEL_NAME)
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
         self.vector_db = VectorStore(index_path=str(FAISS_INDEX_FILE_PATH))
 
         with open(BM25_CORPUS_FILE_PATH, "rb") as f:
