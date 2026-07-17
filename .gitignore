@@ -12,4 +12,7 @@ __pycache__
 
 # Docs
 *.docx
+
+# Conda env (local only, Streamlit Cloud uses requirements.txt)
+environment.yml
 train.jsonl
