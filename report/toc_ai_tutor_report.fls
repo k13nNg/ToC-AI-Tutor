@@ -1,0 +1,6 @@
+PWD /Users/nguyen/Codebase/Development/ToC-AI-Tutor/report
+INPUT /usr/local/texlive/2025basic/texmf.cnf
+INPUT /usr/local/texlive/2025basic/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2025basic/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT /Users/nguyen/Codebase/Development/ToC-AI-Tutor/report/toc_ai_tutor_report.tex
+OUTPUT toc_ai_tutor_report.log

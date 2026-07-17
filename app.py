@@ -1,18 +1,14 @@
 import sys
+import os
 from pathlib import Path
+
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "RAG"))
 
 import streamlit as st
-from RAG.retrieve.llm import ask_llm
-
-@st.cache_resource(show_spinner="Getting ready...")
-def warmup():
-    """Warm up only the generation model."""
-    import ollama
-    ollama.chat(model="llama3.2", messages=[{"role": "user", "content": "hi"}])
-
-warmup()
+from RAG.retrieve.llm_groq import ask_llm
 
 st.set_page_config(page_title="Decidr", page_icon="🧠")
 
