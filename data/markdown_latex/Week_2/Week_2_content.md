@@ -54,7 +54,7 @@ with transition function $\delta$ described as follows:
 
 ## 2.2 formal description of an NFA 
 
-NFAs are formally described by a 5-tuple ( Q, $\Sigma$ , $\delta$, $q_0$ , F ) where: 
+NFAs are formally described by a 5-tuple ( Q, $\Sigma$ , $\delta$, $q_{0}$ , F ) where: 
 
 1. Q is a finite set of states 
 
@@ -62,7 +62,7 @@ NFAs are formally described by a 5-tuple ( Q, $\Sigma$ , $\delta$, $q_0$ , F ) w
 
 3. $\delta$ : Q × $\Sigma$ $\varepsilon$ $\to$ P ( Q ) is the transition function 
 
-4. $q_0$ $\in$ Q is the start state 
+4. $q_{0}$ $\in$ Q is the start state 
 
 5. F $\subseteq$ Q is the set of accept states 
 
@@ -115,7 +115,7 @@ A formal description of N 2 would involve a transition function $\delta$ as foll
 
 Two machines are equivalent if they recognize the same language. Any NFA can be converted into a DFA by building a DFA that has, as its set of states, the power set, P ( Q ), of the states in the NFA, Q . 
 
-Consider the three state NFA $N_3$ with $Q = \left{ 1 , 2 , 3 \right}$ : 
+Consider the three state NFA N 3 with Q = { 1 , 2 , 3 } : 
 
 [Figure: A state diagram of a finite automata (Q, $\Sigma$, $\delta$, $q_{0}$, F) described as follows:
 

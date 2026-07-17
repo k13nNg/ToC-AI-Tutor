@@ -157,7 +157,7 @@ M3 rejects the encoding of p ( x ) = 1 $x^{3}$ − 2 $x^{2}$ + 0 x + 2 because n
 
 The Church-Turing thesis gives a connection between algorithms and TMs; any TM that decides a language can be used as a description of an algorithm for that language. We have the following levels of detail to describe TMs, each of which represents a description of an equivalent algorithm: 
 
-- Formal: A complete description (using math) of the 7-tuple ( Q, $\Sigma$ , Γ , $\delta$, q 0 , $q_{\text{accept}}$, $q_{\text{reject}}$ ) including all states and transitions within $\delta$ . 
+- Formal: A complete description (using math) of the 7-tuple ( Q, $\Sigma$ , $\Gamma$ , $\delta$, $q_{0}$ , $q_{\text{accept}}$, $q_{\text{reject}}$ ) including all states and transitions within $\delta$ . 
 
 - Implementation: A description (using English) of how the head moves and writes data to the tape on an input string. 
 

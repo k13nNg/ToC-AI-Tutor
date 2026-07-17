@@ -6,15 +6,15 @@
 
 # 5 Pushdown automata 
 
-A pushdown automaton (PDA) is a 6-tuple ( Q, $\Sigma$ , Γ , $\delta$, q 0 , F ) where: 
+A pushdown automaton (PDA) is a 6-tuple ( Q, $\Sigma$ , $\Gamma$ , $\delta$, $q_{0}$ , F ) where: 
 
 1. Q is a finite set of states 
 
 2. $\Sigma$ is the input alphabet 
 
-3. Γ is the stack alphabet 
+3. $\Gamma$ is the stack alphabet 
 
-4. $\delta$ : Q × $\Sigma$$\varepsilon$ × Γ$\varepsilon$ $\to$ P ( Q × Γ$\varepsilon$ ) is the transition function 
+4. $\delta$ : Q × $\Sigma$$\varepsilon$ × $\Gamma$$\varepsilon$ $\to$ P ( Q × $\Gamma$$\varepsilon$ ) is the transition function 
 
 5. $q_{0}$ $\in$ Q is the start state 
 
@@ -29,7 +29,7 @@ A non-deterministic transition function could be: $\delta$ ( $q_{1}$ , w, a ) = 
 where: 
 * $q_{i}$ $\in$ Q 
 * w $\in$ $\Sigma$$\varepsilon$ 
-* a, b, c, d $\in$ Γ $\varepsilon$ 
+* a, b, c, d $\in$ $\Gamma$ $\varepsilon$ 
 
 ## 5.1 PDA state diagrams 
 
@@ -45,11 +45,11 @@ State diagrams of PDAs require arrow labels that show the input, the element on 
 
 Here is the state diagram of a PDA, M 1, that recognizes the language A = { $0^{n}$ $1^{n}$ |$n \geq 1$ } : 
 
-[Figure: A state diagram of a pushdown automaton M1 = (Q, $\Sigma$, Γ, $\delta$, $q_{0}$, F) described as follows:
+[Figure: A state diagram of a pushdown automaton M1 = (Q, $\Sigma$, $\Gamma$, $\delta$, $q_{0}$, F) described as follows:
 
 * Q = {$q_{1}$, $q_{2}$, $q_{3}$, $q_{4}$}
 * $\Sigma$ = {0, 1}
-* Γ = {0, $}
+* $\Gamma$ = {0, $}
 * $q_{0}$ = $q_{1}$
 * F = {$q_{4}$}
 
@@ -61,7 +61,7 @@ with transition function $\delta$ described as follows:
 * δ($q_{3}$, 1, 0) = {($q_{3}$, $\varepsilon$)}
 * δ($q_{3}$, $\varepsilon$, $) = {($q_{4}$, $\varepsilon$)}]
 
-We have that Γ = { 0 , \$ } , where \$ is used to mark the start of the stack. 
+We have that $\Gamma$ = { 0 , \$ } , where \$ is used to mark the start of the stack. 
 
 When $ is popped the PDA has reached the end of the stack. 
 
@@ -73,11 +73,11 @@ Since $q_{1}$ is not an accept state we have that $\varepsilon$  ̸$\in$ B .
 
 Here is the state diagram of a PDA, M2, that recognizes the language B = {w$w^{R}$ |w $\in${ 0 , 1 }^* } : 
 
-[Figure: A state diagram of a pushdown automaton (Q, $\Sigma$, Γ, $\delta$, $q_{0}$, F) described as follows:
+[Figure: A state diagram of a pushdown automaton (Q, $\Sigma$, $\Gamma$, $\delta$, $q_{0}$, F) described as follows:
 
 * Q = {$q_{1}$, $q_{2}$, $q_{3}$, $q_{4}$}
 * $\Sigma$ = {0, 1}
-* Γ = {0, 1, $}
+* $\Gamma$ = {0, 1, $}
 * $q_{0}$ = $q_{1}$
 * F = {$q_{1}$, $q_{4}$}
 
@@ -91,7 +91,7 @@ with transition function $\delta$ described as follows:
 * δ($q_{3}$, 1, 1) = {($q_{3}$, $\varepsilon$)}
 * δ($q_{3}$, $\varepsilon$, $) = {($q_{4}$, $\varepsilon$)}]
 
-We have that Γ = { 0 , 1 , \$ } , where \$ is used to mark the start of the stack. 
+We have that $\Gamma$ = { 0 , 1 , \$ } , where \$ is used to mark the start of the stack. 
 
 In the case of M 2, when \$ is popped we have met the criteria writing a string, w , forwards and then in reverse, $w^{R}$ , described by B . 
 
@@ -105,11 +105,11 @@ Theorem: A language is context-free if and only if some PDA recognizes it.
 
 Using the CFG G = ( V, $\Sigma$ , R, S ) that describes the language, construct a general three state non-deterministic PDA, P that recognizes the language: 
 
-[Figure: A state diagram of a pushdown automaton (Q, $\Sigma$, Γ, $\delta$, $q_{0}$, F) described as follows:
+[Figure: A state diagram of a pushdown automaton (Q, $\Sigma$, $\Gamma$, $\delta$, $q_{0}$, F) described as follows:
 
 * Q = {$q_{start}$, $q_{loop}$, $q_{end}$}
 * $\Sigma$ = {a}
-* Γ = {A, S, a, $}
+* $\Gamma$ = {A, S, a, $}
 * $q_{0}$ = $q_{start}$
 * F = {$q_{end}$}
 

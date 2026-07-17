@@ -26,6 +26,7 @@ OUTPUT_DIR   = PROJECT_ROOT / "data" / "markdown_latex"
 RULES = [
     # --- Greek / special symbols ---
     (re.compile(r'(?<![A-Za-z\\])Σ(?![A-Za-z])'),   r'$\\Sigma$'),
+    (re.compile(r'(?<![A-Za-z\\])Γ(?![A-Za-z])'),   r'$\\Gamma$'),
     (re.compile(r'(?<![A-Za-z\\])ε(?![A-Za-z])'),    r'$\\varepsilon$'),
     (re.compile(r'(?<![A-Za-z\\])δ(?![A-Za-z(])'),   r'$\\delta$'),
     (re.compile(r'∅'),                                 r'$\\emptyset$'),
@@ -43,7 +44,9 @@ RULES = [
     (re.compile(r'→'),                                 r'$\\to$'),
 
     # --- State names: q0, q1, qaccept, qreject, qa, qr ---
-    (re.compile(r'\bq(accept|reject)\b'),              r'$q_{\\text{\1}}$'),
+    # Also handle "q 0", "q 1" (space between q and number from PDF parsing)
+    (re.compile(r'\bq(accept|reject|start|loop|end)\b'), r'$q_{\\text{\1}}$'),
+    (re.compile(r'\bq\s+([0-9]+)\b'),                  r'$q_{\1}$'),
     (re.compile(r'\bq([0-9]+)\b'),                     r'$q_{\1}$'),
     (re.compile(r'\bq([a-z])\b'),                      r'$q_{\1}$'),
 

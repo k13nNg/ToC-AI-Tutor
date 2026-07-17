@@ -4,7 +4,7 @@
 
 # 1 Finite Automata 
 
-Deterministic Finite Automata (DFA) are models for computers with limited memory. They are formally described by a 5-tuple ( Q, $\Sigma$ , $\delta$, q 0 , F ) where: 
+Deterministic Finite Automata (DFA) are models for computers with limited memory. They are formally described by a 5-tuple ( Q, $\Sigma$ , $\delta$, $q_{0}$ , F ) where: 
 
 1. Q is a finite set of states 
 
@@ -80,9 +80,9 @@ The formal description of M2 is the 5-tuple ({$q_{1}$, $q_{2}$, $q_{3}$, $q_{4}$
 
 If A is the set of all strings that machine M accepts, then A is the language of M , and hence $L(M)$ = A . 
 
-In the case of M 2, we have that $L(M_2)$ = {w | w contains the substring 101 } 
+In the case of M 2, we have that $L(M2)$ = {w | w contains the substring 101 } 
 
-In the case of M1, we have that $L(M_1)$ = { 101 }. In other words, the language of M1 is the binary string 101. 
+In the case of M1, we have that $L(M1)$ = { 101 }. In other words, the language of M1 is the binary string 101. 
 
 ## 1.4 the empty string, $\varepsilon$ 
 
@@ -96,7 +96,7 @@ to define a string, x, of length zero.
 
 ## 1.5 definition of computation 
 
-Let M = ( Q, $\Sigma$ , $\delta$, $q_0$ , F ) be a finite automaton and $w = w_1w_2w_3 ...w_n$ be a string of length $n$ over the alphabet $\Sigma$. Then M accepts w if a sequence of states $r_0 , r_1 , r_2 , \ldots, r_n$ exists in Q such that: 
+Let M = ( Q, $\Sigma$ , $\delta$, $q_{0}$ , F ) be a finite automaton and w = w1w2w3 ...wn be a string of length n over the alphabet $\Sigma$. Then M accepts w if a sequence of states r0 , r1 , r2 , ..., rn exists in Q such that: 
 
 1. r0 = $q_{0}$ 
 
@@ -130,7 +130,7 @@ with transition function $\delta$ described as follows:
 * δ($q_{4}$, 0) = $q_{4}$
 * δ($q_{4}$, 1) = $q_{4}$]
 
-We have that $L(M_2)$ = { w | w contains the substring 101 } . Therefore $L(M_2)$ is a regular language. 
+We have that $L(M2)$ = { w | w contains the substring 101 } . Therefore $L(M2)$ is a regular language. 
 
 ## 1.7 regular operations 
 
@@ -140,9 +140,9 @@ Let A and B be languages. The regular operations are:
 
 - Concatenation: A $\circ$ B = {xy|x $\in$ A and y $\in$ B} 
 
-- Star: $A^*$ = {x_1x_2x_3...x_k | $k \geq 0$ and each xi $\in$ A} 
+- Star: $A^*$ = {x1x2x3...xk | $k \geq 0$ and each xi $\in$ A} 
 
-For example if A = { 3p0, r2 } and B = { bb8 } then: 
+For example if A = { 3po, r2 } and B = { bb8 } then: 
 
 A $\cup$ B = { 3p0, r2, bb8 } 
 
