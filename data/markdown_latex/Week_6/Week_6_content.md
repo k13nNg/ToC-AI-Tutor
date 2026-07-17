@@ -6,15 +6,15 @@
 
 Turing machines are models of computers with unrestricted access to unlimited memory. They are more powerful than DFAs, NFAs, and PDAs; in other words they are more powerful than any finite automaton. 
 
-- A Turing machine (TM) is a 7-tuple ( Q, $\Sigma$ , Γ , $\delta$, q 0 , $q_{\text{accept}}$, $q_{\text{reject}}$ ) where: 
+- A Turing machine (TM) is a 7-tuple ( Q, $\Sigma$ , $\Gamma$ , $\delta$, $q_{0}$ , $q_{\text{accept}}$, $q_{\text{reject}}$ ) where: 
 
    1. Q is a finite set of states 
 
    2. $\Sigma$ is the input alphabet where $\sqcup$  ̸$\in$ $\Sigma$ 
 
-   3. Γ is the tape alphabet, where $\sqcup$ $\in$ Γ and $\Sigma$ $\subset$ Γ 
+   3. $\Gamma$ is the tape alphabet, where $\sqcup$ $\in$ $\Gamma$ and $\Sigma$ $\subset$ $\Gamma$ 
 
-   4. $\delta$ : Q × Γ $\to$ Q × Γ × {L, R} is the transition function 
+   4. $\delta$ : Q × $\Gamma$ $\to$ Q × $\Gamma$ × {L, R} is the transition function 
 
    5. $q_{0}$ $\in$ Q is the start state 
 
@@ -38,7 +38,7 @@ During computations changes occur to the state, tape contents, and head position
 
 The critical configurations are the: 
 
-   - C1: start configuration with state q 0 
+   - C1: start configuration with state $q_{0}$ 
 
    - Caccept : accept configuration with state $q_{\text{accept}}$ 
 
@@ -50,7 +50,7 @@ A TM accepts input w = w1w2...wn $\in$ $\Sigma$ [∗] if a sequence of configura
 
 ## 6.3 the transition function of a TM 
 
-The transition function, $\delta$ : Q × Γ $\to$ Q × Γ × {L, R} , takes a (state, current tape element) pair and returns a (state, new tape element, direction) triple. Some examples of this are: 
+The transition function, $\delta$ : Q × $\Gamma$ $\to$ Q × $\Gamma$ × {L, R} , takes a (state, current tape element) pair and returns a (state, new tape element, direction) triple. Some examples of this are: 
 
 - $\delta$ ( $q_{1}$ , a ) = ( $q_{2}$ , b, R ). “transition from $q_{1}$ to $q_{2}$ when the head reads a on the tape, write b on the tape (re-writing the a), and then move the head one symbol to the right on the tape” . The state diagram label for this would be: a $\to$ b, R . 
 
@@ -72,21 +72,21 @@ On input string w :
 
 2. When all symbols on left of # have been re-written, check for any remaining (non re-written symbols) on right of #. If any symbols remain on right, reject, otherwise accept. 
 
-A formal description of M1 is given by M1 = ( Q, $\Sigma$ , Γ , $\delta$, $q_{1}$ , $q_{\text{accept}}$, $q_{\text{reject}}$ ) where: 
+A formal description of M1 is given by M1 = ( Q, $\Sigma$ , $\Gamma$ , $\delta$, $q_{1}$ , $q_{\text{accept}}$, $q_{\text{reject}}$ ) where: 
 
 - Q = {$q_{1}$ , $q_{2}$ , $q_{3}$ , $q_{4}$ , $q_{5}$ , $q_{6}$ , $q_{7}$ , $q_{8}$ , $q_{\text{accept}}$, $q_{\text{reject}}$} 
 
 - $\Sigma$ = { 0 , 1 , # } 
 
-- Γ = { 0 , 1 , # , x, } 
+- $\Gamma$ = { 0 , 1 , # , x, } 
 
 - $\delta$ is given by the following state diagram : 
 
-[Figure: A state diagram of a Turing Machine (Q, $\Sigma$, Γ, $\delta$, $q_{0}$, $q_{accept}$, $q_{reject}$) described as follows:
+[Figure: A state diagram of a Turing Machine (Q, $\Sigma$, $\Gamma$, $\delta$, $q_{0}$, $q_{accept}$, $q_{reject}$) described as follows:
 
 * Q = {$q_{1}$, $q_{2}$, $q_{3}$, $q_{4}$, $q_{5}$, $q_{6}$, $q_{7}$, $q_{8}$, $q_{accept}$}
 * $\Sigma$ = {0, 1, #}
-* Γ = {0, 1, #, x, $\sqcup$}  *(where $\sqcup$ represents the blank symbol)*
+* $\Gamma$ = {0, 1, #, x, $\sqcup$}  *(where $\sqcup$ represents the blank symbol)*
 * $q_{0}$ = $q_{1}$
 * $q_{accept}$ = $q_{accept}$
 * $q_{reject}$ = implicit for any undefined transitions
@@ -161,7 +161,7 @@ We have reached Creject = x#$q_{\text{reject}}$#01. Therefore the input w = 0##0
 
 A multi-tape TM has k tapes, where the input w appears initially on tape k = 1, with all other tapes blank. 
 
-The general transition function for a k tape TM is $\delta$ : Q × Γ^k $\to$ Q × Γ^k × {L, R, S}^k . 
+The general transition function for a k tape TM is $\delta$ : Q × $\Gamma$^k $\to$ Q × $\Gamma$^k × {L, R, S}^k . 
 
 - {L, R, S}^k allows for some tape heads to “stay” while others move left or right. 
 
@@ -181,11 +181,11 @@ If this TM was in state $q_{1}$ with tape head 1 over a1, tape head 2 over a2, a
 
 A non-deterministic TM allows for different sequences of configurations to be computed in parallel. 
 
-The general transition function for non-deterministic TM is $\delta$ : Q × Γ $\to$ P ( Q × Γ × {L, R} ). 
+The general transition function for non-deterministic TM is $\delta$ : Q × $\Gamma$ $\to$ P ( Q × $\Gamma$ × {L, R} ). 
 
 For example, a non-deterministic TM could have $\delta$ ( $q_{1}$ , a ) = { ( $q_{2}$ , b, R ) , ( $q_{5}$ , c, L ) , ( $q_{8}$ , d, R ) } . 
 
-Such a transition would allow the TM to split into three possible configuration sequences. For example if the current configuration in a sequence was yzq 1 ay , then $\delta$ ( q 1 , a ) would split this sequence into three parallel configuration sequences: 
+Such a transition would allow the TM to split into three possible configuration sequences. For example if the current configuration in a sequence was yzq 1 ay , then $\delta$ ( $q_{1}$ , a ) would split this sequence into three parallel configuration sequences: 
 
 $$
 \begin{matrix}

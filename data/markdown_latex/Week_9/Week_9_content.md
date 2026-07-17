@@ -114,13 +114,13 @@ We have proven that HALT TM is an undecidable language.
 
 A linear bounded automaton (LBA) is a TM that can only solve problems requiring memory that can fit within the tape used for input. In other words, an LBA does not have an infinite number of blank symbols, $\sqcup$, to the right of the input; the tape just stops there. An interesting feature of LBAs is that they have a finite number of distinct configurations, C distinct. 
 
-Consider an LBA described by a TM 7-tuple ( Q, $\Sigma$ , Γ , $\delta$, $q_{0}$ , $q_{a}$, $q_{r}$ ) where: 
+Consider an LBA described by a TM 7-tuple ( Q, $\Sigma$ , $\Gamma$ , $\delta$, $q_{0}$ , $q_{a}$, $q_{r}$ ) where: 
 
 - Q = {$q_{0}$, $q_{1}$, $q_{2}$, $q_{a}$, $q_{r}$} 
 
 - $\Sigma$ = { 0 , 1 } 
 
-- Γ = $\Sigma$ $\cup${x, $\sqcup$} 
+- $\Gamma$ = $\Sigma$ $\cup${x, $\sqcup$} 
 
 For the 3-bit input w = 110 we can only use 3 locations for memory. The symbols for those locations are { 0 , 1 , x, $\sqcup$} . So we have a total of $4^{3}$ =64 different possible memory strings. For each of these strings, the tape head can be over one of 3 positions, and for each of the string-position pairs, there are 5 states possible. Therefore, this LBA has a total of 5 × 3 × $4^{3}$ distinct configurations. 
 
