@@ -1,4 +1,15 @@
-/data
+# Raw data (large PDFs, original markdown)
+/data/pdf
+/data/markdown
+/data/json
+/data/.DS_Store
+
+# Python
 __pycache__
+
+# Secrets
 .env
+
+# Docs
 *.docx
+train.jsonl
