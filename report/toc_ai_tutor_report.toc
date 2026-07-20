@@ -1,0 +1,28 @@
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Background}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Large Language Models}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Retrieval-Augmented Generation}{3}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Information Retrieval}{4}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Sparse Retrieval}{4}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Dense Retrieval}{5}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Hybrid Retrieval}{5}{subsection.2.3.3}%
+\contentsline {chapter}{\numberline {3}System Architecture}{6}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Overview}{6}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Offline Indexing Pipeline}{7}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Document Extraction}{7}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Document Chunking}{7}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Dense Index Construction}{7}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Sparse Index Construction}{8}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Online Inference Pipeline}{8}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Query Preprocessing}{8}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Hybrid Retrieval}{8}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Prompt Construction}{9}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Response Generation}{9}{subsection.3.3.4}%
+\contentsline {chapter}{\numberline {4}Iterative Development}{10}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Local LLM Inference}{10}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Fine-tuned LLM}{10}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Adoption of RAG and Cloud Inference}{11}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Lessons Learned}{12}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Conclusion and Future Work}{13}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Conclusion}{13}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Future Work}{13}{section.5.2}%
